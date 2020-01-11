@@ -14,7 +14,9 @@ import {
 	DidChangeConfigurationNotification,
 	CompletionItem,
 	CompletionItemKind,
-	TextDocumentPositionParams
+	TextDocumentPositionParams,
+	CodeLensParams,
+	CancellationToken
 } from 'vscode-languageserver';
 
 // Create a connection for the server. The connection uses Node's IPC as a transport.
@@ -52,6 +54,9 @@ connection.onInitialize((params: InitializeParams) => {
 			// Tell the client that the server supports code completion
 			completionProvider: {
 				resolveProvider: true
+			},
+			codeLensProvider: {
+				resolveProvider: false
 			}
 		}
 	};
@@ -230,6 +235,10 @@ connection.onDidCloseTextDocument((params) => {
 	connection.console.log(`${params.textDocument.uri} closed.`);
 });
 */
+
+connection.onCodeLens((params: CodeLensParams, token:CancellationToken) => {
+	return null;
+})
 
 // Make the text document manager listen on the connection
 // for open, change and close text document events
